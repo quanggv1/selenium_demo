@@ -28,6 +28,9 @@ npm install --save selenium-webdriver
 ```
 (–-save creates a new package. This would be saved to the project’s package.json file.)
 
+![image](https://github.com/quanggv1/selenium_demo/assets/22222802/8db0b319-8a01-4c6b-86da-01695e9814cc)
+
+
 ### Step 3: Install Visual Studio Code
 https://code.visualstudio.com/download
 
@@ -40,14 +43,50 @@ https://www.npmjs.com/package/selenium-webdriver
 
 chrome driver: https://googlechromelabs.github.io/chrome-for-testing/
 
-Chrome version 124
+Selenium WebDriver v4.6+ (which you can download here). Note that you'll need to download the browser driver separately for Selenium WebDriver versions below 4.6; however, for version 4.6 and above, Selenium WebDriver uses a service object to render a browser window.
 
-![image](https://github.com/quanggv1/selenium_demo/assets/22222802/95a5d9fd-06b8-423f-bbbe-f2826d8fb929)
 
-Chrome Driver version 124
+### Step 5: Run the test script
 
-![image](https://github.com/quanggv1/selenium_demo/assets/22222802/76aed48e-ec68-4bb4-89c0-2c3d4581d2ac)
+create file js test.js
+```
+const { Builder, By, until } = require("selenium-webdriver");
+const assert = require("assert");
 
+async function titleTest() {
+
+  // launch the browser
+  let driver = await new Builder().forBrowser("chrome").build();
+
+  try {
+    //navigate to google page
+    await driver.get("https://www.google.com/");
+
+    //Check page title, to confirm login was successful
+    const pageTitle = await driver.getTitle();
+
+    //assert using node assertion
+    assert.strictEqual(pageTitle, "Google");
+  } finally {
+    await driver.quit();
+  }
+}
+
+titleTest();
+```
+
+To run the test file, you use node and the following command in your terminal:
+```
+node test.js
+```
+
+If the test fails (such as when you enter the wrong credentials), the test will still run to completion. The following will be logged in the terminal:
+
+Script exited with code 1.
+
+This means that the test script returned a value of 1, which indicates that the test failed. In addition, the page title will not change.
+
+![image](https://github.com/quanggv1/selenium_demo/assets/22222802/15453b54-f721-4d0e-97e5-06a5ff77a426)
 
 
 
